@@ -1,0 +1,15 @@
+{
+  "name": "alpha8",
+  "alphabet_size": 8,
+  "codon_length": 3,
+  "determining_positions": [
+    0,
+    1,
+    2
+  ],
+  "silent_positions": [],
+  "n_codons": 512,
+  "n_H_codons": 256,
+  "n_P_codons": 256,
+  "actual_h_fraction": 0.5
+}

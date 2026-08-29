@@ -1,0 +1,31 @@
+experiment	eval_01	eval_02	eval_03	eval_04	eval_05	eval_06	eval_07	eval_08	eval_09	eval_10	eval_11	eval_12	eval_13	eval_14	mean_r	time_s	description
+001_random_uniform	0.1294	0.1281	0.0771	0.3902	0.1281	0.1189	-0.1416	0.5795	0.3902	0.0938	0.1189	0.0771	-0.1470	0.1294	0.1580	36	uniform random ACGT, seed 0
+002_random_genomic	0.5037	0.5050	0.5198	0.3869	0.5050	0.5047	0.6369	-0.1364	0.3869	0.4551	0.5047	0.5198	0.6212	0.5037	0.4584	39	random 200bp windows from hg38 autosomes+X+Y
+003_ccre_enriched	0.5147	0.5148	0.4976	0.5528	0.5148	0.5091	0.4811	0.3053	0.5528	0.4674	0.5091	0.4976	0.4661	0.5147	0.4927	104	200bp windows centered on ENCODE V3 cCREs (uniform sample)
+004_mix_genomic_ccre	0.5687	0.5694	0.5684	0.5218	0.5694	0.5671	0.6303	0.0818	0.5218	0.5177	0.5671	0.5684	0.6115	0.5687	0.5309	32	50/50 mix: random genomic + cCRE centered
+005_threeway_mix	0.5291	0.5299	0.5254	0.4877	0.5299	0.5242	0.5750	0.2048	0.4877	0.4765	0.5242	0.5254	0.5535	0.5291	0.5002	17	1/3 each: random uniform + random genomic + cCRE
+006_mix_genomic_dhs_balanced	0.5477	0.5486	0.5538	0.4723	0.5486	0.5473	0.6370	-0.0096	0.4723	0.5040	0.5473	0.5538	0.6204	0.5477	0.5065	46	50/50 mix: random genomic + DHS Index balanced across 16 components
+007_genomic_ccre_classbalanced	0.5759	0.5765	0.5734	0.5473	0.5765	0.5746	0.6263	0.1293	0.5473	0.5174	0.5746	0.5734	0.6067	0.5759	0.5411	18	50/50 mix: random genomic + class-balanced cCRE (5k each of PLS pELS dELS CTCF DNase-H3K4me3)
+008_ratio_30_70	0.5722	0.5728	0.5648	0.5697	0.5728	0.5692	0.5991	0.2121	0.5697	0.5088	0.5692	0.5648	0.5767	0.5722	0.5424	30	30/70 mix: genomic + class-balanced cCRE
+009_genomic_ccre_dhs	0.5701	0.5708	0.5703	0.5243	0.5708	0.5693	0.6333	0.0807	0.5243	0.5173	0.5693	0.5703	0.6154	0.5701	0.5326	36	3-way: 50% genomic + 25% class-balanced cCRE + 25% DHS-balanced
+010_genomic_ccre_cpgi	0.5754	0.5760	0.5710	0.5638	0.5760	0.5739	0.6148	0.1743	0.5638	0.5107	0.5739	0.5710	0.5941	0.5754	0.5439	15	3-way: 50% genomic + 40% class-balanced cCRE (4k/class) + 10% CpG islands
+011_genomic_ccre_cpgi_phastcons	0.5736	0.5743	0.5712	0.5487	0.5743	0.5727	0.6247	0.1349	0.5487	0.5133	0.5727	0.5712	0.6040	0.5736	0.5398	68	4-way: 50% genomic + 30% class-balanced cCRE + 10% CpGi + 10% phastCons (subst cCRE)
+012_replace_genomic_with_phastcons	0.5725	0.5730	0.5683	0.5562	0.5730	0.5709	0.6158	0.1691	0.5562	0.5112	0.5709	0.5683	0.5943	0.5725	0.5409	47	4-way: 40% genomic + 40% cCRE + 10% CpGi + 10% phastCons (subst genomic)
+013_uniform_dose_5pct	0.5758	0.5764	0.5698	0.5699	0.5764	0.5736	0.6073	0.2020	0.5699	0.5103	0.5736	0.5698	0.5861	0.5758	0.5455	23	4-way: 45% genomic + 40% cCRE + 10% CpGi + 5% uniform random (NEW BEST)
+014_uniform_dose_10pct	0.5700	0.5705	0.5621	0.5705	0.5705	0.5669	0.5936	0.2284	0.5705	0.5036	0.5669	0.5621	0.5719	0.5700	0.5413	29	4-way: 40% genomic + 40% cCRE + 10% CpGi + 10% uniform random
+015_mono_shuffled_ccre	0.5761	0.5767	0.5707	0.5687	0.5767	0.5743	0.6105	0.1943	0.5687	0.5110	0.5743	0.5707	0.5895	0.5761	0.5456	25	5% mono-shuffled cCRE in place of uniform random (NEW BEST tied)
+016_uniform_plus_shuffled	0.5764	0.5770	0.5706	0.5698	0.5770	0.5743	0.6090	0.1996	0.5698	0.5111	0.5743	0.5706	0.5879	0.5764	0.5460	15	Combine 2.5% uniform + 2.5% mono-shuffled (NEW BEST)
+017_add_at_rich	0.5741	0.5747	0.5700	0.5562	0.5747	0.5725	0.6164	0.1735	0.5562	0.5125	0.5725	0.5700	0.5948	0.5741	0.5423	13	Add 5% AT-rich genomic (GC<0.35) to exp 016 base
+018_multiwindow_ccre	0.5772	0.5778	0.5723	0.5686	0.5778	0.5754	0.6123	0.1897	0.5686	0.5130	0.5754	0.5723	0.5922	0.5772	0.5464	21	Multi-window cCRE: 10k unique x 2 windows + base (NEW BEST)
+019_multiwindow_ccre_5x	0.5786	0.5792	0.5746	0.5658	0.5792	0.5771	0.6173	0.1747	0.5658	0.5138	0.5771	0.5746	0.5973	0.5786	0.5467	26	cCRE 5-window: 4k unique x 5 offsets (NEW BEST, eval_01=0.579)
+020_multiwindow_cpgi	0.5787	0.5793	0.5748	0.5665	0.5793	0.5772	0.6168	0.1743	0.5665	0.5140	0.5772	0.5748	0.5968	0.5787	0.5468	20	Multi-window CpGi (1k x 5) + cCRE 5x + base (NEW BEST, marginal)
+021_seed1_replicate	0.5777	0.5783	0.5741	0.5629	0.5783	0.5761	0.6180	0.1691	0.5629	0.5154	0.5761	0.5741	0.5975	0.5777	0.5456	14	Exp 020 with SEED=1 (noise estimate, mean diff = -0.001)
+022_random_offset_ccre	0.5778	0.5784	0.5738	0.5657	0.5784	0.5764	0.6159	0.1766	0.5657	0.5142	0.5764	0.5738	0.5955	0.5778	0.5462	34	Random-offset cCRE (20k unique x 1 random) + base
+023_tf_chip_remap	0.5748	0.5753	0.5684	0.5750	0.5753	0.5725	0.6012	0.2123	0.5750	0.5087	0.5725	0.5684	0.5800	0.5748	0.5453	21	Add 10% ReMap CRM (TF ChIP, TFs>=50)
+024_tf_chip_small_dose	0.5764	0.5770	0.5716	0.5676	0.5770	0.5746	0.6112	0.1878	0.5676	0.5128	0.5746	0.5716	0.5906	0.5764	0.5455	13	Smaller TF CRM dose (5%) displacing genomic (tradeoff scales linearly)
+025_planted_motifs	0.5686	0.5692	0.5614	0.5698	0.5692	0.5658	0.5919	0.2253	0.5698	0.5009	0.5658	0.5614	0.5693	0.5686	0.5398	31	Planted TF consensus motifs (10%) in random ACGT (hurt mean badly)
+026_planted_motifs_genomic_bg	0.5774	0.5781	0.5734	0.5643	0.5781	0.5760	0.6161	0.1741	0.5643	0.5138	0.5760	0.5734	0.5954	0.5774	0.5456	33	Planted motifs (2.5%) in GENOMIC bg (theory v7.0 confirmed: neutral)
+027_ablate_synthetic_reg	0.5723	0.5729	0.5658	0.5763	0.5729	0.5703	0.5990	0.2115	0.5763	0.5019	0.5703	0.5658	0.5759	0.5723	0.5431	24	Remove synthetic regs scale cCRE+CpGi (load-bearing finding mean -0.0037)
+028_synthetic_reg_10pct	0.5759	0.5765	0.5708	0.5665	0.5765	0.5739	0.6101	0.1937	0.5665	0.5125	0.5739	0.5708	0.5893	0.5759	0.5452	15	Synthetic reg at 10% (5%+5%): worse than 5% — sweet spot confirmed
+029_seed2_replicate	0.5780	0.5787	0.5736	0.5689	0.5787	0.5764	0.6128	0.1806	0.5689	0.5132	0.5764	0.5736	0.5926	0.5780	0.5465	23	Exp 020 with SEED=2 (3-seed mean = 0.5463 ± 0.001)
+030_final_scale_ccre	0.5716	0.5722	0.5644	0.5770	0.5722	0.5690	0.5948	0.2250	0.5770	0.5041	0.5690	0.5644	0.5712	0.5716	0.5431	20	Scale cCRE to 6k unique x 5 windows + 5% synth (cCRE bias too strong)

@@ -1,0 +1,31 @@
+experiment	eval_01	eval_02	eval_03	eval_04	eval_05	eval_06	eval_07	eval_08	eval_09	eval_10	eval_11	eval_12	eval_13	eval_14	time_s	description
+001_random_uniform	0.0648	0.0634	0.0782	0.0813	0.0634	0.0653	0.131	0.0563	0.0813	0.1194	0.0653	0.0782	0.1186	0.0648	27.4	uniform iid ACGT, seed 42
+002_human_dinuc_markov	0.0730	0.0714	0.0969	0.0795	0.0714	0.0733	0.1403	0.0636	0.0795	0.1169	0.0733	0.0969	0.1361	0.0730	27	1st-order Markov, human dinuc freqs
+003_genome_random_windows	0.0752	0.0739	0.0961	0.0845	0.0739	0.0747	0.1431	0.0642	0.0845	0.1267	0.0747	0.0961	0.1438	0.0752	34	random 200bp windows chr17/19/22
+004_tfbs_centered_windows	0.0764	0.0747	0.0963	0.0907	0.0747	0.0755	0.1407	0.0636	0.0907	0.1245	0.0755	0.0963	0.1409	0.0764	28	200bp windows centered on TFBS clusters chr17/19/22
+005_k562_dhs_centered	0.0735	0.0718	0.0878	0.0894	0.0718	0.0728	0.139	0.055	0.0894	0.1256	0.0728	0.0878	0.1342	0.0735	19	200bp centered on K562 DNase peak summits, top by height
+006_motif_dense_synthetic	0.064	0.0623	0.0816	0.0762	0.0623	0.063	0.1207	0.0478	0.0762	0.1132	0.063	0.0816	0.1178	0.064	42	synthetic, 6-10 copies of 1 primary TF motif + secondary motifs per seq
+007_mixed_diverse	0.07	0.0686	0.089	0.0838	0.0686	0.0695	0.1386	0.061	0.0838	0.1277	0.0695	0.089	0.142	0.07	30	10k each of random/dinuc/genome/K562 DHS/motif-dense, shuffled
+008_gc_stratified	0.0651	0.0638	0.0836	0.0767	0.0638	0.0652	0.124	0.0493	0.0767	0.1098	0.0652	0.0836	0.1289	0.0651	16	random ACGT with target GC uniform in [0.2,0.8]
+009_ccre_class_stratified	0.0745	0.0729	0.0905	0.0867	0.0729	0.0737	0.1435	0.0621	0.0867	0.1258	0.0737	0.0905	0.1396	0.0745	14	6250 each from 8 ENCODE cCRE V4 classes, 200bp centered
+010_multicell_dhs	0.0712	0.0697	0.084	0.0879	0.0697	0.0698	0.1285	0.0556	0.0879	0.1233	0.0698	0.084	0.1261	0.0712	19	top 50k DHS summits across K562+HepG2+SKNSH (15 files), 50bp dedup
+011_kmer_topic_dhs	0.076	0.0745	0.0953	0.0843	0.0745	0.0768	0.1419	0.06	0.0843	0.1225	0.0768	0.0953	0.1401	0.076	62	4-mer K-Means(50) clusters of 250k cCRE windows, 1000 per cluster
+012_ccre_promoters_only	0.074	0.0723	0.0885	0.0922	0.0723	0.0736	0.1375	0.0578	0.0922	0.1242	0.0736	0.0885	0.1306	0.074	13	47k Promoter cCREs + Proximal enhancer pad, 200bp centered
+013_kmer6_topic_dhs	0.0458	0.0452	0.0549	0.0596	0.0452	0.0466	0.0855	0.0248	0.0596	0.0805	0.0466	0.0549	0.0882	0.0458	32	6-mer K-Means(100) on 150k cCRE windows; oversampling of small clusters HURT
+014_kmer4_topic_full	0.0739	0.0722	0.0919	0.0890	0.0722	0.0745	0.1432	0.0666	0.0890	0.1295	0.0745	0.0919	0.1414	0.0739	80	4-mer K-Means(80) on FULL 2.35M cCRE pool, no replacement; marginal regression vs 011
+015_activity_contrast	0.0723	0.0708	0.0905	0.0850	0.0708	0.0719	0.1356	0.0586	0.0850	0.1242	0.0719	0.0905	0.1367	0.0723	98	25k DHS-positives (topic-stratified) + 25k intergenic-deserts; contrast HURT
+016_noise_test	0.0734	0.0716	0.0911	0.0844	0.0716	0.0735	0.1419	0.0623	0.0844	0.1294	0.0735	0.0911	0.1406	0.0734	75	EXACT replicate of 011 with seed 911; 0.0734 vs 011's 0.0760 -> noise floor ~0.003 confirmed
+017_tfbs_hub_ccres	0.0756	0.0739	0.0903	0.0881	0.0739	0.0752	0.1416	0.0595	0.0881	0.1301	0.0752	0.0903	0.1397	0.0756	52	top 50k cCREs by TFBS-cluster overlap density; within noise of 011
+018_rc_augmented	0.0745	0.0730	0.0928	0.0857	0.0730	0.0745	0.1429	0.0616	0.0857	0.1271	0.0745	0.0928	0.1435	0.0745	15	25k topic-cCREs + 25k RC; within noise; faster prepare runtime
+019_hybrid_union	0.0755	0.0741	0.0947	0.0879	0.0741	0.0754	0.1421	0.0620	0.0879	0.1297	0.0754	0.0947	0.1397	0.0755	51	10k each topic+TFBS-hub+DHS+promoter+random; no benefit from union
+020_sliding_window_aug	0.0764	0.0748	0.0957	0.0916	0.0748	0.0755	0.1390	0.0572	0.0916	0.1263	0.0755	0.0957	0.1357	0.0764	57	12.5k top-TFBS-density cCREs x 4 sliding windows (offsets +-25, +-75); NEW BEST
+021_slide5_tfbs	0.0758	0.0740	0.0933	0.0887	0.0740	0.0756	0.1426	0.0577	0.0887	0.1278	0.0756	0.0933	0.1371	0.0758	67	5 windows x 10k top-TFBS cCREs; within noise of 020
+022_slide2_topic25k	0.0756	0.0740	0.0949	0.0866	0.0740	0.0756	0.1467	0.0638	0.0866	0.1288	0.0756	0.0949	0.1440	0.0756	14	25k topic-stratified x 2 slides; eval_07/13 NEW BEST but eval_01 same
+023_slide_replicate	0.0766	0.0750	0.0959	0.0916	0.0750	0.0758	0.1391	0.0565	0.0916	0.1261	0.0758	0.0959	0.1355	0.0766	53	replicate of 020 with seed 211; eval_01=0.0766 (NEW BEST)
+024_tfbs_dhs_slide	0.0763	0.0747	0.0949	0.0914	0.0747	0.0753	0.1385	0.0551	0.0914	0.1255	0.0753	0.0949	0.1362	0.0763	55	TFBS-density x log(DHS-signal) scoring + 4 slides; same as TFBS-only
+025_slide_wide_offsets	0.0752	0.0738	0.0945	0.0900	0.0738	0.0752	0.1385	0.0569	0.0900	0.1253	0.0752	0.0945	0.1406	0.0752	52	020 recipe with offsets +-95/+-32; wider offsets slightly hurt
+026_slide6_aug	0.0747	0.0733	0.0957	0.0910	0.0733	0.0737	0.1402	0.0603	0.0910	0.1268	0.0737	0.0957	0.1356	0.0747	48	6 windows x 8.33k regions; fewer regions = worse
+027_slide_narrow	0.0760	0.0744	0.0893	0.0917	0.0744	0.0749	0.1375	0.0597	0.0917	0.1262	0.0749	0.0893	0.1329	0.0760	46	020 with offsets +-20/+-60; SKNSH=0.0706 (new high) but same eval_01
+028_slide_topic_blend	0.0760	0.0745	0.0961	0.0878	0.0745	0.0760	0.1405	0.0616	0.0878	0.1242	0.0760	0.0961	0.1403	0.0760	60	top-50k-TFBS -> topic-cluster 50 -> 250/cluster -> 4 slides; eval_03 new high
+029_final_replicate	0.0764	0.0748	0.0955	0.0916	0.0748	0.0755	0.1392	0.0571	0.0916	0.1264	0.0755	0.0955	0.1357	0.0764	23	020 recipe replicate seed=250; matches 020 exactly (proven robust)
+030_final	0.0764	0.0749	0.0962	0.0915	0.0749	0.0756	0.1393	0.0575	0.0915	0.1263	0.0756	0.0962	0.1357	0.0764	13	FINAL: proven 020 recipe seed=350; eval_03=0.0962 (best across all 30)

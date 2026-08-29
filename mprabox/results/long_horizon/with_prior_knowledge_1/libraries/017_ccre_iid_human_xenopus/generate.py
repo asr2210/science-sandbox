@@ -1,0 +1,230 @@
+#!/usr/bin/env python3
+"""
+Experiment 017 — cCRE (35K) + iid (5K) + human (5K) + xenopus (5K).
+
+Tests xenopus tropicalis (xenTro10, ~360 Mya divergence from human) as
+cross-species at the predicted hump peak. Direct 010-style design with
+xenopus replacing chicken. From 011's hump map: chicken (310 Mya, peak
++0.023) > zebrafish (430 Mya, +0.017) > mouse (80 Mya, +0.008). If the
+peak is at xenopus distance (~360 Mya) instead of chicken (~310), 017
+beats 010.
+
+xenTro10: 10 large chromosomes (chr1-chr10) totaling ~1.45 Gb of
+assemblable mass. We restrict sampling to chr1-chr10 (skip the 157
+unplaced scaffolds for cleaner sampling).
+
+RNG: cCRE = seed*2+1, iid = seed*4+11, human-gen = seed*4+13,
+xenopus-gen = seed*4+37, final shuffle = seed*4+17. New offset 37 for
+xenopus to avoid collision with mouse (19), chicken (23), zebrafish
+(29 in earlier exps), dinuc-source (29), dinuc-shuffle (31).
+"""
+from __future__ import annotations
+
+import bisect
+import random
+import sys
+from pathlib import Path
+
+from twobitreader import TwoBitFile
+
+REPO = Path(__file__).resolve().parents[2]
+CCRE_BED = REPO / "data" / "cCRE" / "GRCh38-cCREs.bed"
+HG38 = REPO / "data" / "genome" / "hg38.2bit"
+XENTRO10 = REPO / "data" / "genome" / "xenTro10.2bit"
+OUT_DIR = Path(__file__).resolve().parent
+
+WIN = 200
+N_PER_CLASS = 7_000
+N_IID = 5_000
+N_HUMAN_GEN = 5_000
+N_XENOPUS_GEN = 5_000
+N_TOTAL = 50_000
+PRIMARY_CLASSES = ("PLS", "pELS", "dELS", "CTCF-only", "DNase-H3K4me3")
+HUMAN_CHROMS = tuple(f"chr{i}" for i in range(1, 23)) + ("chrX",)
+XENOPUS_CHROMS = tuple(f"chr{i}" for i in range(1, 11))
+SEEDS = (0, 1, 2)
+CCRE_EXCLUSION_BP = 200
+
+
+def primary_class(field6: str) -> str | None:
+    head = field6.split(",", 1)[0]
+    return head if head in PRIMARY_CLASSES else None
+
+
+def load_cre_data():
+    pools = {c: [] for c in PRIMARY_CLASSES}
+    intervals = {}
+    with open(CCRE_BED) as fh:
+        for line in fh:
+            parts = line.rstrip("\n").split("\t")
+            if len(parts) < 6:
+                continue
+            chrom, start, end = parts[0], int(parts[1]), int(parts[2])
+            cls = primary_class(parts[5])
+            if cls is not None:
+                mid = (start + end) // 2
+                pools[cls].append((chrom, mid))
+            intervals.setdefault(chrom, []).append((start, end))
+    for chrom in intervals:
+        intervals[chrom].sort()
+    return pools, intervals
+
+
+def overlaps_cre(chrom, start, end, intervals) -> bool:
+    chr_intervals = intervals.get(chrom)
+    if chr_intervals is None:
+        return False
+    s = start - CCRE_EXCLUSION_BP
+    e = end + CCRE_EXCLUSION_BP
+    starts = [iv[0] for iv in chr_intervals]
+    idx = bisect.bisect_right(starts, e)
+    i = idx - 1
+    while i >= 0:
+        iv_start, iv_end = chr_intervals[i]
+        if iv_end <= s:
+            break
+        if iv_start < e and iv_end > s:
+            return True
+        i -= 1
+    return False
+
+
+def extract_window(genome, chrom, start, rng) -> str | None:
+    end = start + WIN
+    chrom_len = len(genome[chrom])
+    if start < 0 or end > chrom_len:
+        return None
+    seq = genome[chrom][start:end].upper()
+    if len(seq) != WIN:
+        return None
+    if seq.count("N") > WIN // 2:
+        return None
+    return "".join(b if b in "ACGT" else rng.choice("ACGT") for b in seq)
+
+
+def sample_ccre(seed, pools, genome) -> list[str]:
+    rng = random.Random(seed * 2 + 1)
+    seqs = []
+    used = set()
+    for cls in PRIMARY_CLASSES:
+        pool = pools[cls]
+        order = list(range(len(pool)))
+        rng.shuffle(order)
+        kept = 0
+        for idx in order:
+            if kept >= N_PER_CLASS:
+                break
+            chrom, mid = pool[idx]
+            key = (chrom, mid)
+            if key in used:
+                continue
+            seq = extract_window(genome, chrom, mid - WIN // 2, rng)
+            if seq is None:
+                continue
+            seqs.append(seq)
+            used.add(key)
+            kept += 1
+        if kept < N_PER_CLASS:
+            raise RuntimeError(f"seed {seed}: {cls} only produced {kept}/{N_PER_CLASS}")
+    return seqs
+
+
+def random_iid(seed, n) -> list[str]:
+    rng = random.Random(seed * 4 + 11)
+    return ["".join(rng.choices("ACGT", k=WIN)) for _ in range(n)]
+
+
+def random_human_genomic(seed, n, intervals, genome) -> list[str]:
+    rng = random.Random(seed * 4 + 13)
+    chrom_lens = {c: len(genome[c]) for c in HUMAN_CHROMS}
+    cum, csum = [], 0
+    for c in HUMAN_CHROMS:
+        csum += chrom_lens[c]
+        cum.append(csum)
+    total = csum
+    seqs = []
+    attempts = 0
+    while len(seqs) < n:
+        attempts += 1
+        if attempts > n * 50:
+            raise RuntimeError(f"human-gen: only {len(seqs)}/{n}")
+        x = rng.randrange(total)
+        ci = 0
+        while x >= cum[ci]:
+            ci += 1
+        chrom = HUMAN_CHROMS[ci]
+        prev = cum[ci - 1] if ci > 0 else 0
+        pos = x - prev
+        start = pos - WIN // 2
+        end = start + WIN
+        if start < 0 or end > chrom_lens[chrom]:
+            continue
+        if overlaps_cre(chrom, start, end, intervals):
+            continue
+        seq = extract_window(genome, chrom, start, rng)
+        if seq is None:
+            continue
+        seqs.append(seq)
+    return seqs
+
+
+def random_xenopus_genomic(seed, n, genome) -> list[str]:
+    rng = random.Random(seed * 4 + 37)
+    chroms = list(XENOPUS_CHROMS)
+    chrom_lens = {c: len(genome[c]) for c in chroms}
+    cum, csum = [], 0
+    for c in chroms:
+        csum += chrom_lens[c]
+        cum.append(csum)
+    total = csum
+    seqs = []
+    attempts = 0
+    while len(seqs) < n:
+        attempts += 1
+        if attempts > n * 50:
+            raise RuntimeError(f"xenopus-gen: only {len(seqs)}/{n}")
+        x = rng.randrange(total)
+        ci = 0
+        while x >= cum[ci]:
+            ci += 1
+        chrom = chroms[ci]
+        prev = cum[ci - 1] if ci > 0 else 0
+        pos = x - prev
+        start = pos - WIN // 2
+        end = start + WIN
+        if start < 0 or end > chrom_lens[chrom]:
+            continue
+        seq = extract_window(genome, chrom, start, rng)
+        if seq is None:
+            continue
+        seqs.append(seq)
+    return seqs
+
+
+def main() -> None:
+    print("Loading cCRE data...", file=sys.stderr)
+    pools, intervals = load_cre_data()
+    print("Opening hg38 + xenTro10 .2bit...", file=sys.stderr)
+    hg38 = TwoBitFile(str(HG38))
+    xentro10 = TwoBitFile(str(XENTRO10))
+    for seed in SEEDS:
+        print(f"\n[seed {seed}] cCRE 35K (7K x 5)...", file=sys.stderr)
+        ccre = sample_ccre(seed, pools, hg38)
+        print(f"[seed {seed}] iid 5K...", file=sys.stderr)
+        iid = random_iid(seed, N_IID)
+        print(f"[seed {seed}] human genomic 5K...", file=sys.stderr)
+        hgen = random_human_genomic(seed, N_HUMAN_GEN, intervals, hg38)
+        print(f"[seed {seed}] xenopus genomic 5K...", file=sys.stderr)
+        xgen = random_xenopus_genomic(seed, N_XENOPUS_GEN, xentro10)
+        seqs = ccre + iid + hgen + xgen
+        if len(seqs) != N_TOTAL:
+            raise RuntimeError(f"seed {seed}: total {len(seqs)} != {N_TOTAL}")
+        random.Random(seed * 4 + 17).shuffle(seqs)
+        out_path = OUT_DIR / f"sequences_{seed}.txt"
+        with open(out_path, "w") as fh:
+            fh.write("\n".join(seqs) + "\n")
+        print(f"[seed {seed}] wrote {out_path}", file=sys.stderr)
+
+
+if __name__ == "__main__":
+    main()

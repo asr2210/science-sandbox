@@ -1,0 +1,15 @@
+{
+  "name": "alpha6",
+  "alphabet_size": 6,
+  "codon_length": 3,
+  "determining_positions": [
+    0,
+    1,
+    2
+  ],
+  "silent_positions": [],
+  "n_codons": 216,
+  "n_H_codons": 108,
+  "n_P_codons": 108,
+  "actual_h_fraction": 0.5
+}

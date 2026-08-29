@@ -1,0 +1,3 @@
+[submodule "mprabox/boda2"]
+	path = mprabox/boda2
+	url = https://github.com/sjgosai/boda2.git

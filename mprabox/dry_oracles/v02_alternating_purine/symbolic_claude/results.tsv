@@ -1,0 +1,31 @@
+experiment	eval_01	eval_02	eval_03	eval_04	eval_05	eval_06	eval_07	eval_08	eval_09	eval_10	eval_11	eval_12	eval_13	eval_14	time_s	description
+001_uniform_random	0.1272	0.1276	0.1438	0.1333	0.1276	0.1520	0.1514	0.0524	0.1333	0.1326	0.1520	0.1438	0.1331	0.1272	14.2	uniform random baseline
+002_homopolymer_mix	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	20.0	homopolymer mix (12.5k each base) — NaN, library too low-diversity
+003_dirichlet_composition	0.1118	0.1119	0.1205	0.1180	0.1119	0.1226	0.1508	0.0391	0.1180	0.1164	0.1226	0.1205	0.1160	0.1118	13.7	per-sequence Dirichlet(0.5) composition diversity
+004_balanced_shuffled	0.1243	0.1245	0.1408	0.1281	0.1245	0.1510	0.1276	0.0566	0.1281	0.1196	0.1510	0.1408	0.1237	0.1243	12.1	exactly 50 of each base, random per-seq permutation
+005_pair_02_only	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	19.2	random over {0,2} only — NaN (library must contain all 4 bases)
+006_noisy_periodic_0123	0.1550	0.1552	0.1643	0.1558	0.1552	0.1973	0.1354	0.0498	0.1558	0.1357	0.1973	0.1643	0.1135	0.1550	13.4	noisy 0123 periodic, p_template=0.7
+007_periodic_0123_p90	0.1307	0.1311	0.1403	0.1317	0.1311	0.1621	0.1182	0.0362	0.1317	0.1206	0.1621	0.1403	0.0978	0.1307	14.3	periodic 0123 with stronger p=0.9 (worse than p=0.7)
+008_random_per_pos_template	0.0977	0.0981	0.1130	0.0959	0.0981	0.1039	0.1171	0.0469	0.0959	0.1561	0.1039	0.1130	0.1109	0.0977	14.8	random preferred base per position, p=0.7 (worse than baseline)
+009_period4_0213	0.0949	0.0948	0.1072	0.0931	0.0948	0.1330	0.0903	0.0412	0.0931	0.0894	0.1330	0.1072	0.0891	0.0949	20.7	period-4 motif 0,2,1,3 at p=0.7 (wrong ordering)
+010_period4_0123_p50	0.1534	0.1535	0.1626	0.1547	0.1535	0.1941	0.1352	0.0517	0.1547	0.1352	0.1941	0.1626	0.1149	0.1534	10.8	period-4 0123 at p=0.5 (≈ p=0.7)
+011_phase1_1230_p70	0.1181	0.1193	0.1346	0.1153	0.1193	0.1038	0.1658	0.0595	0.1153	0.1398	0.1038	0.1346	0.1568	0.1181	12.2	phase-shifted period-4 (1,2,3,0) p=0.7
+012_blocked_ascending	0.0864	0.0873	0.0965	0.0882	0.0873	0.0824	0.1194	0.0418	0.0882	0.1144	0.0824	0.0965	0.1064	0.0864	13.1	blocked ascending 0/0/0... 1/1/1... etc, p=0.7
+013_variable_p_0123	0.1245	0.1247	0.1365	0.1250	0.1247	0.1498	0.1161	0.0388	0.1250	0.1261	0.1498	0.1365	0.1017	0.1245	12.2	0123 template with per-seq p~U[0.05,0.95] (variance hypothesis failed)
+014_period4_0321_reverse	0.1536	0.1538	0.1621	0.1519	0.1538	0.1875	0.1371	0.0462	0.1519	0.1298	0.1875	0.1621	0.1125	0.1536	17.6	period-4 reverse (0,3,2,1) at p=0.7 (≈0123)
+015_period2_02_purine	0.1007	0.1016	0.1129	0.0985	0.1016	0.1390	0.0977	0.0335	0.0985	0.0935	0.1390	0.1129	0.0879	0.1007	20.5	period-2 (0,2) template at p=0.7
+016_period16_all_phases	0.0996	0.0998	0.1069	0.0986	0.0998	0.1044	0.1113	0.0422	0.0986	0.0907	0.1044	0.1069	0.0948	0.0996	22.6	period-16 multi-phase template (worse than period-4)
+017_asymmetric_noise_0123	0.1196	0.1200	0.1264	0.1238	0.1200	0.1415	0.1058	0.0393	0.1238	0.1100	0.1415	0.1264	0.0942	0.1196	20.3	period-4 0123 p=0.7 with asymmetric noise (next-base biased)
+018_period4_0123_p75	0.1546	0.1548	0.1637	0.1548	0.1548	0.1955	0.1349	0.0478	0.1548	0.1359	0.1955	0.1637	0.1118	0.1546	13.5	period-4 0123 p=0.75 (flat optimum confirmed)
+019_period3_012	0.0957	0.0966	0.0986	0.0931	0.0966	0.1011	0.0874	0.0387	0.0931	0.0831	0.1011	0.0986	0.0786	0.0957	23.2	period-3 (0,1,2) p=0.7 (worse: period-4 specific)
+020_period4_perseq_phase	0.1420	0.1426	0.1521	0.1355	0.1426	0.1488	0.1546	0.0543	0.1355	0.1541	0.1488	0.1521	0.1262	0.1420	23.5	per-seq random phase period-4 p=0.7 (c preserved, a/b collapse)
+021_pos_gradient_p	0.1505	0.1506	0.1598	0.1528	0.1506	0.1901	0.1326	0.0498	0.1528	0.1341	0.1901	0.1598	0.1123	0.1505	22.9	period-4 p=0.95 first half, p=0.5 second half (slight drop)
+022_period4_0123_p40	0.1534	0.1535	0.1631	0.1547	0.1535	0.1953	0.1356	0.0521	0.1547	0.1345	0.1953	0.1631	0.1140	0.1534	25.4	period-4 0123 p=0.4 (plateau low-end confirmed)
+023_perseq_2phase_01	0.1479	0.1489	0.1527	0.1491	0.1489	0.1544	0.1735	0.0502	0.1491	0.1207	0.1544	0.1527	0.1458	0.1479	26.1	per-seq 2-phase mix (0,1) p=0.7 (eval_07 lifts, eval_01 drops)
+024_deterministic_4phases	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	27.8	deterministic 4-pattern (12500 of each phase) - condition_c NaN insight
+025_prev_biased_noise	0.1178	0.1185	0.1268	0.1251	0.1185	0.1416	0.1037	0.0392	0.1251	0.1083	0.1416	0.1268	0.0900	0.1178	24.4	period-4 0123 prev-biased asym noise (0.7/0.05/0.05/0.2)
+026_gradient_peak	0.1147	0.1149	0.1230	0.1212	0.1149	0.1371	0.1009	0.0353	0.1212	0.1063	0.1371	0.1230	0.0886	0.1147	25.7	period-4 0123 gradient peak (0.5/0.2/0.2/0.1) - sharp peak is optimal
+027_perrow_noise_dirichlet	0.1628	0.1631	0.1721	0.1611	0.1631	0.2109	0.1416	0.0502	0.1611	0.1381	0.2109	0.1721	0.1153	0.1628	25.3	per-row Dirichlet(1) noise direction (BREAKTHROUGH +0.008)
+028_perrow_dirichlet_03	0.1630	0.1633	0.1722	0.1612	0.1633	0.2119	0.1422	0.0490	0.1612	0.1377	0.2119	0.1722	0.1148	0.1630	28.1	per-row Dirichlet(0.3) noise direction (tied with Dirichlet(1))
+029_perrow_4way_dirichlet	0.1658	0.1660	0.1745	0.1618	0.1660	0.2164	0.1428	0.0510	0.1618	0.1386	0.2164	0.1745	0.1140	0.1658	25.9	per-row 4-way Dirichlet alpha=(2.1,0.3,0.3,0.3) NEW BEST
+030_perrow_dirichlet_extreme	0.1710	0.1711	0.1796	0.1602	0.1711	0.2278	0.1445	0.0441	0.1602	0.1411	0.2278	0.1796	0.1090	0.1710	21.1	per-row 4-way Dirichlet alpha=(0.7,0.1,0.1,0.1) EXTREME variance - FINAL BEST

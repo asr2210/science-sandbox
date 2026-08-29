@@ -1,0 +1,31 @@
+experiment	eval_01	eval_02	eval_03	eval_04	eval_05	eval_06	eval_07	eval_08	eval_09	eval_10	eval_11	eval_12	eval_13	eval_14	time_s	description
+001_uniform_random	0.1451	0.1437	0.0919	0.4001	0.1437	0.1340	-0.1223	0.5795	0.4001	0.1085	0.1340	0.0919	-0.1243	0.1451	59.3	uniform iid random over {0,1,2,3}
+002_const_char_mix	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	45.2	4 constant sequences x 12500 copies; ALL NaN; revealed Pearson r metric
+003_dirichlet_compositions	0.3604	0.3604	0.3608	0.3639	0.3604	0.3646	0.3947	0.2070	0.3639	0.3672	0.3646	0.3608	0.3824	0.3604	34.8	per-seq Dirichlet(0.5) compositions; eval_01 +0.21; eval_08 -0.37
+004_dirichlet_alpha_0p1	0.2816	0.2819	0.2858	0.2761	0.2819	0.2864	0.3231	0.1453	0.2761	0.2937	0.2864	0.2858	0.3165	0.2816	37.8	Dirichlet(0.1); too extreme; eval_01 worse than alpha=0.5
+005_dirichlet_alpha_0p3	0.3445	0.3447	0.3452	0.3502	0.3447	0.3488	0.3776	0.1903	0.3502	0.3476	0.3488	0.3452	0.3665	0.3445	45.2	Dirichlet(0.3); still below alpha=0.5
+006_dirichlet_alpha_1p0	0.3827	0.3826	0.3796	0.3895	0.3826	0.3857	0.4083	0.2373	0.3895	0.3872	0.3857	0.3796	0.3977	0.3827	39.9	Dirichlet(1.0); NEW BEST eval_01
+007_dirichlet_alpha_2p0	0.3917	0.3915	0.3857	0.4059	0.3915	0.3937	0.4096	0.2640	0.4059	0.3928	0.3937	0.3857	0.3951	0.3917	23.3	Dirichlet(2.0); NEW BEST eval_01; still climbing
+008_dirichlet_alpha_5p0	0.3909	0.3905	0.3789	0.4246	0.3905	0.3904	0.3665	0.3431	0.4246	0.3886	0.3904	0.3789	0.3553	0.3909	38.2	Dirichlet(5.0); plateau; eval_08 jumped up
+009_markov_per_seq	0.3856	0.3852	0.3733	0.4337	0.3852	0.3856	0.3573	0.3333	0.4337	0.3768	0.3856	0.3733	0.3451	0.3856	34.0	per-seq Markov chain; eval_01 below alpha=2
+010_motif_embed	0.3904	0.3901	0.3831	0.4089	0.3901	0.3915	0.3969	0.2875	0.4089	0.3920	0.3915	0.3831	0.3839	0.3904	33.4	Dirichlet(2.0) bg + random embedded motifs; no gain
+011_four_corner	0.2703	0.2701	0.2787	0.1905	0.2701	0.2720	0.3645	0.0980	0.1905	0.3035	0.2720	0.2787	0.3503	0.2703	35.3	4 corner clusters; much worse; smoothness matters
+012_two_block	0.3785	0.3781	0.3628	0.4229	0.3781	0.3747	0.3220	0.3726	0.4229	0.3717	0.3747	0.3628	0.3225	0.3785	32.4	two-block positional composition; a/b tradeoff; eval_01 below alpha=2
+013_smooth_gradient	0.3953	0.3949	0.3849	0.4202	0.3949	0.3947	0.3785	0.3300	0.4202	0.3953	0.3947	0.3849	0.3683	0.3953	32.4	per-seq linear gradient between Dirichlet(2) endpoints; NEW BEST
+014_gradient_alpha1	0.4066	0.4064	0.4019	0.4095	0.4064	0.4076	0.4219	0.2778	0.4095	0.4061	0.4076	0.4019	0.4122	0.4066	26.3	smooth gradient with Dirichlet(1.0) endpoints; NEW BEST
+015_gradient_alpha0p5	0.4078	0.4077	0.4049	0.4005	0.4077	0.4091	0.4322	0.2504	0.4005	0.4065	0.4091	0.4049	0.4222	0.4078	47.6	smooth gradient with Dirichlet(0.5) endpoints; marginal new best
+016_gradient_multi	0.3969	0.3968	0.3920	0.4000	0.3968	0.3971	0.4067	0.2614	0.4000	0.3936	0.3971	0.3920	0.3987	0.3969	32.5	3-control-point gradient; worse than 2-point
+017_gradient_alpha0p3	0.4051	0.4050	0.4038	0.3901	0.4050	0.4062	0.4376	0.2391	0.3901	0.4042	0.4062	0.4038	0.4288	0.4051	29.3	gradient alpha=0.3 endpoints; below alpha=0.5
+018_grad_markov_hybrid	0.4010	0.4007	0.3911	0.4351	0.4007	0.4014	0.3882	0.3246	0.4351	0.3933	0.4014	0.3911	0.3744	0.4010	35.6	50/50 gradient+Markov hybrid; eval_01 below pure gradient
+019_grad_markov_light	0.4115	0.4113	0.4072	0.4093	0.4113	0.4122	0.4307	0.2744	0.4093	0.4106	0.4122	0.4072	0.4188	0.4115	38.5	gradient + Markov weight 0.2; NEW BEST
+020_grad_markov_0p3	0.4057	0.4053	0.3994	0.4161	0.4053	0.4065	0.4119	0.2880	0.4161	0.4068	0.4065	0.3994	0.4016	0.4057	34.5	gradient + Markov weight 0.3; below 0.2
+021_grad_markov_0p1	0.4073	0.4071	0.4037	0.4000	0.4071	0.4083	0.4304	0.2571	0.4000	0.4075	0.4083	0.4037	0.4193	0.4073	25.2	Markov weight 0.1; below 0.2
+022_comp_random_walk	0.1632	0.1620	0.1157	0.4152	0.1620	0.1540	-0.1089	0.5717	0.4152	0.1242	0.1540	0.1157	-0.1078	0.1632	50.7	per-seq compositional random walk; CRASHED to near random-uniform; LLN ate between-seq variance
+023_markov_rows_alpha1	0.4121	0.4120	0.4084	0.4062	0.4120	0.4125	0.4318	0.2689	0.4062	0.4101	0.4125	0.4084	0.4220	0.4121	35.6	gradient + Markov rows alpha=1.0; NEW BEST eval_01
+024_markov_rows_alpha2	0.4084	0.4082	0.4052	0.3993	0.4082	0.4089	0.4342	0.2672	0.3993	0.4090	0.4089	0.4052	0.4231	0.4084	65.3	Markov rows alpha=2.0; worse than 1.0
+025_markov_rows_alpha0p3	0.4128	0.4126	0.4084	0.4120	0.4126	0.4132	0.4298	0.2741	0.4120	0.4111	0.4132	0.4084	0.4193	0.4128	50.7	Markov rows alpha=0.3; NEW BEST
+026_markov_rows_alpha0p2	0.4131	0.4129	0.4078	0.4164	0.4129	0.4136	0.4250	0.2751	0.4164	0.4101	0.4136	0.4078	0.4149	0.4131	50.9	Markov rows alpha=0.2; new best by 0.0003
+027_markov_weight0p3_sharp	0.4100	0.4097	0.4035	0.4226	0.4097	0.4109	0.4162	0.2894	0.4226	0.4057	0.4109	0.4035	0.4027	0.4100	41.5	Markov weight 0.3 + sharp rows; worse than 0.2
+028_sigmoidal_gradient	0.4090	0.4088	0.4053	0.3993	0.4088	0.4085	0.4257	0.2688	0.3993	0.4070	0.4085	0.4053	0.4163	0.4090	42.1	sigmoidal gradient k=8; worse than linear
+029_endpoints_alpha0p7	0.4100	0.4097	0.4025	0.4247	0.4097	0.4104	0.4143	0.2950	0.4247	0.4063	0.4104	0.4025	0.4023	0.4100	14.4	endpoints alpha=0.7; worse than 0.5
+030_champion_final	0.4152	0.4150	0.4106	0.4165	0.4150	0.4160	0.4307	0.2723	0.4165	0.4112	0.4160	0.4106	0.4193	0.4152	21.2	FINAL CHAMPION: gradient α=0.5 + Markov w=0.2 rows α=0.25; NEW BEST 0.4152

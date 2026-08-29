@@ -1,0 +1,31 @@
+experiment	eval_01	eval_02	eval_03	eval_04	eval_05	eval_06	eval_07	eval_08	eval_09	eval_10	eval_11	eval_12	eval_13	eval_14	time_s	description
+001_uniform_random	0.2399	0.2401	0.2355	0.2287	0.2401	0.2395	0.2286	0.0869	0.2287	0.2402	0.2395	0.2355	0.2235	0.2399	13.2	iid uniform random over {0,1,2,3}
+002_char_bias_mix	0.1402	0.1404	0.1364	0.1445	0.1404	0.1420	0.1028	0.0530	0.1445	0.1334	0.1420	0.1364	0.1035	0.1402	13.4	4 groups of 12500 with 70%-biased single-char composition
+003_low_diversity	0.1602	0.1598	0.1611	0.1513	0.1598	0.1600	0.1528	0.0191	0.1513	0.1483	0.1600	0.1611	0.1505	0.1602	12.9	one balanced template with 5%% iid mutations per copy
+004_uniform_plus_motif	0.2235	0.2237	0.2192	0.2186	0.2237	0.2230	0.2073	0.0869	0.2186	0.2263	0.2230	0.2192	0.1949	0.2235	14.4	uniform random + 12bp periodic motif "012301230123" at random position
+005_fixed_scaffold	0.2661	0.2665	0.2710	0.2405	0.2665	0.2654	0.2802	0.0882	0.2405	0.2600	0.2654	0.2710	0.2725	0.2661	13.6	48-char fixed "0123" prefix + 152-char uniform random tail
+006_scaffold_100	-0.1488	-0.1483	-0.1556	-0.1664	-0.1483	-0.1494	-0.1525	-0.0485	-0.1664	-0.1703	-0.1494	-0.1556	-0.1554	-0.1488	15.6	100-char period-4 "0123" prefix + 100 uniform tail
+007_random_scaffold_48	0.2653	0.2657	0.2678	0.2401	0.2657	0.2653	0.2683	0.0848	0.2401	0.2612	0.2653	0.2678	0.2574	0.2653	17.8	48-char fixed RANDOM balanced scaffold prefix + uniform tail
+008_scaffold_72	0.2744	0.2749	0.2783	0.2390	0.2749	0.2745	0.2798	0.0832	0.2390	0.2583	0.2745	0.2783	0.2787	0.2744	17.2	72-char period-4 prefix + 128-char uniform tail
+009_scaffold_48_prefix_suffix	-0.1419	-0.1413	-0.1447	-0.1621	-0.1413	-0.1425	-0.1400	-0.0404	-0.1621	-0.1627	-0.1425	-0.1447	-0.1382	-0.1419	24.9	48+48 scaffold at prefix and suffix (total 96 fixed)
+010_scaffold_80	0.1125	0.1125	0.1093	0.0966	0.1125	0.1111	0.0898	0.0312	0.0966	0.0971	0.1111	0.1093	0.0868	0.1125	15.2	80-char period-4 prefix + 120 random tail (past cliff)
+011_no_self_repeat	0.1758	0.1754	0.1684	0.1662	0.1754	0.1741	0.1322	0.0512	0.1662	0.1463	0.1741	0.1684	0.1246	0.1758	15.1	Markov chain with P(X_{t+1}=X_t)=0 (no consecutive duplicates)
+012_palindrome	0.2919	0.2925	0.2948	0.2518	0.2925	0.2903	0.3104	0.0878	0.2518	0.2784	0.2903	0.2948	0.3007	0.2919	30.2	100 random + 100 reverse-complement (0<->3, 1<->2) (full palindrome)
+013_direct_repeat	0.2353	0.2358	0.2360	0.2269	0.2358	0.2358	0.2278	0.0832	0.2269	0.2381	0.2358	0.2360	0.2205	0.2353	36.2	100 random + same 100 (direct repeat, no complement)
+014_palindrome_plus_scaffold	0.3066	0.3072	0.3131	0.2611	0.3072	0.3052	0.3379	0.0896	0.2611	0.2918	0.3052	0.3131	0.3316	0.3066	32.2	palindrome + 24-char period-4 scaffold prefix (48 fixed positions total)
+015_palindrome_scaffold_36	0.3018	0.3023	0.3057	0.2554	0.3023	0.3005	0.3194	0.0868	0.2554	0.2807	0.3005	0.3057	0.3188	0.3018	29.2	palindrome + 36-char period-4 scaffold prefix
+016_four_palindromes	0.3042	0.3047	0.3097	0.2597	0.3047	0.3025	0.3336	0.0894	0.2597	0.2859	0.3025	0.3097	0.3237	0.3042	36.9	four palindromes of length 50 per sequence (same total RC pairs)
+017_palindrome_scaffold_12	0.3051	0.3057	0.3113	0.2598	0.3057	0.3035	0.3348	0.0904	0.2598	0.2882	0.3035	0.3113	0.3217	0.3051	22.0	palindrome + 12-char scaffold prefix (smaller scaffold)
+018_scaled_palindrome	0.2922	0.2927	0.2972	0.2552	0.2927	0.2905	0.3135	0.0932	0.2552	0.2789	0.2905	0.2972	0.3006	0.2922	47.6	scaled palindrome: A + RC(A) + A + RC(A), A length 50
+019_palindrome_alt_complement	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	19.3	palindrome under alt complement 0<->1,2<->3 (caused NaN in cond a)
+020_palindrome_dense_motifs	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	25.9	palindrome + 24 scaffold + tail of dense palindromic 4-mers (NaN a/b)
+021_palindrome_noisy_scaffold	0.3036	0.3040	0.3079	0.2592	0.3040	0.3025	0.3225	0.0873	0.2592	0.2850	0.3025	0.3079	0.3145	0.3036	36.4	palindrome + 48-char period-4 scaffold with 20%% mutation noise
+022_library_rc_pairs	0.2504	0.2505	0.2497	0.2351	0.2505	0.2493	0.2462	0.0858	0.2351	0.2523	0.2493	0.2497	0.2382	0.2504	24.7	25k random + 25k their RC (library-level RC pairing, no per-seq palindrome)
+023_palindrome_scaffold_18	0.3030	0.3036	0.3088	0.2589	0.3036	0.3016	0.3340	0.0931	0.2589	0.2886	0.3016	0.3088	0.3224	0.3030	14.4	palindrome + 18-char period-4 scaffold
+024_palindrome_distributed_scaffold	0.3053	0.3059	0.3114	0.2593	0.3059	0.3040	0.3355	0.0920	0.2593	0.2884	0.3040	0.3114	0.3255	0.3053	14.9	4x6 distributed scaffolds at 0,25,50,75 in palindrome left half
+025_palindrome_local_palin_6mers	0.2546	0.2548	0.2506	0.2274	0.2548	0.2524	0.2357	0.0802	0.2274	0.2352	0.2524	0.2506	0.2285	0.2546	36.5	palindrome + scaffold + local palin 6-mers tiled in tail
+026_palindrome_ebox_scaffold	0.3121	0.3125	0.3175	0.2663	0.3125	0.3107	0.3383	0.0892	0.2663	0.2942	0.3107	0.3175	0.3310	0.3121	22.3	palindrome + 4x E-box (CACGTG) scaffold (24 chars)
+027_palindrome_ebox36	0.3047	0.3051	0.3112	0.2615	0.3051	0.3033	0.3351	0.0744	0.2615	0.2893	0.3033	0.3112	0.3250	0.3047	17.2	palindrome + E-box x6 scaffold (36 chars)
+028_palindrome_aatatt_scaffold	0.3155	0.3161	0.3188	0.2640	0.3161	0.3151	0.3312	0.0810	0.2640	0.2970	0.3151	0.3188	0.3254	0.3155	21.6	palindrome + 4x AATATT scaffold (AT-rich palindromic 6-mer)
+029_palindrome_aaattt_scaffold	0.3147	0.3151	0.3172	0.2646	0.3151	0.3139	0.3275	0.0835	0.2646	0.2964	0.3139	0.3172	0.3197	0.3147	13.4	palindrome + 4x AAATTT scaffold (AT-extreme palindrome)
+030_palindrome_aaaatttt_scaffold	0.3177	0.3182	0.3216	0.2649	0.3182	0.3175	0.3339	0.0816	0.2649	0.2990	0.3175	0.3216	0.3297	0.3177	15.2	palindrome + 3x AAAATTTT scaffold (8-mer AT-block palindrome)

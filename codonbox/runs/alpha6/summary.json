@@ -1,0 +1,10 @@
+{
+  "world": "F2_alpha6",
+  "n_residues": 16,
+  "budget": 500,
+  "queries_used": 500,
+  "best_fitness": 9,
+  "best_sequence": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+  "true_optimum_fitness": 9,
+  "fraction_of_optimum": 1.0
+}

@@ -1,0 +1,88 @@
+{
+  "eval_01": {
+    "mean_r": 0.3452,
+    "condition_a": 0.9949,
+    "condition_b": 0.0484,
+    "condition_c": -0.0076
+  },
+  "eval_02": {
+    "mean_r": 0.345,
+    "condition_a": 0.9949,
+    "condition_b": 0.0489,
+    "condition_c": -0.0087
+  },
+  "eval_03": {
+    "mean_r": 0.3507,
+    "condition_a": 0.9951,
+    "condition_b": 0.059,
+    "condition_c": -0.002
+  },
+  "eval_04": {
+    "mean_r": 0.3521,
+    "condition_a": 0.995,
+    "condition_b": 0.0572,
+    "condition_c": 0.0041
+  },
+  "eval_05": {
+    "mean_r": 0.345,
+    "condition_a": 0.9949,
+    "condition_b": 0.0489,
+    "condition_c": -0.0087
+  },
+  "eval_06": {
+    "mean_r": 0.3481,
+    "condition_a": 0.995,
+    "condition_b": 0.0559,
+    "condition_c": -0.0066
+  },
+  "eval_07": {
+    "mean_r": 0.3515,
+    "condition_a": 0.9951,
+    "condition_b": 0.0614,
+    "condition_c": -0.0019
+  },
+  "eval_08": {
+    "mean_r": 0.3343,
+    "condition_a": 0.9927,
+    "condition_b": 0.0149,
+    "condition_c": -0.0046
+  },
+  "eval_09": {
+    "mean_r": 0.3521,
+    "condition_a": 0.995,
+    "condition_b": 0.0572,
+    "condition_c": 0.0041
+  },
+  "eval_10": {
+    "mean_r": 0.3479,
+    "condition_a": 0.9948,
+    "condition_b": 0.0372,
+    "condition_c": 0.0116
+  },
+  "eval_11": {
+    "mean_r": 0.3481,
+    "condition_a": 0.995,
+    "condition_b": 0.0559,
+    "condition_c": -0.0066
+  },
+  "eval_12": {
+    "mean_r": 0.3507,
+    "condition_a": 0.9951,
+    "condition_b": 0.059,
+    "condition_c": -0.002
+  },
+  "eval_13": {
+    "mean_r": 0.3471,
+    "condition_a": 0.9951,
+    "condition_b": 0.0392,
+    "condition_c": 0.007
+  },
+  "eval_14": {
+    "mean_r": 0.3452,
+    "condition_a": 0.9949,
+    "condition_b": 0.0484,
+    "condition_c": -0.0076
+  },
+  "n_seeds": 1,
+  "time_s": 29.5
+}
