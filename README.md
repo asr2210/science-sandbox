@@ -1,6 +1,6 @@
 # Science Sandboxes
 
-Code and results for **"Science sandboxes measure the scientific capability of AI agents"**.
+Code and results for **["Science sandboxes measure the scientific capability of AI agents"](https://arxiv.org/abs/2608.30165)**.
 
 This repository contains two sandboxes — sealed experimental environments where AI agents conduct autonomous scientific research against ground-truth oracles:
 
@@ -54,10 +54,13 @@ See [`codonbox/README.md`](codonbox/README.md) for setup and usage.
 
 ## Citation
 
+**Preprint:** [arXiv:2608.30165](https://arxiv.org/abs/2608.30165)
+
 ```bibtex
 @article{rao2026science,
   title={Science sandboxes measure the scientific capability of AI agents},
-  author={Rao, Arya},
+  author={Rao, Arya S.},
+  journal={arXiv preprint arXiv:2608.30165},
   year={2026}
 }
 ```
